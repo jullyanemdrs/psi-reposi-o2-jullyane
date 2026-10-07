@@ -3,8 +3,11 @@ import math
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 
 import database
+from auth import auth_bp
 
 app = Flask(__name__)
+app.secret_key = "chave-secreta"
+app.register_blueprint(auth_bp)
 
 database.criar_banco()
 
@@ -58,28 +61,6 @@ def excluir_treino(treino_id):
     return redirect(url_for("index"))
 
 
-@app.route("/registro", methods=["GET", "POST"])
-def registro():
-    if request.method == "POST":
-        flash("Implemente o cadastro com hash de senha.")
-        return redirect(url_for("registro"))
-
-    return render_template("registro.html")
-
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        flash("Implemente o login com session.")
-        return redirect(url_for("login"))
-
-    return render_template("login.html")
-
-
-@app.route("/logout")
-def logout():
-    flash("Implemente o logout com session.")
-    return redirect(url_for("index"))
 
 
 if __name__ == "__main__":
